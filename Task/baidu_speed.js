@@ -66,7 +66,7 @@ if ($.isNode()) {
   for (let i = 0; i < CookieArr.length; i++) {
     if (CookieArr[i]) {
       cookieval = CookieArr[i];
-      withcash = cashArr[i];
+      //withcash = cashArr[i];
       $.index = i + 1;
       await userInfo();
       if (isblack == "true") {
@@ -84,7 +84,7 @@ if ($.isNode()) {
     }
   }
 })()
-    .catch((e) => $.logErr(e))
+    //.catch((e) => $.logErr(e))
     .finally(() => $.done())
 
 //签到
@@ -103,7 +103,7 @@ function getsign() {
             if (get_sign.errno == 0) {
                 $.desc = get_sign.data.tips+` 收益: $ {get_sign.data.bonus.coin}💰\n`;
                 $.log($.desc+"\n"+data);
-                await invite()
+                //await invite()
             } else {
                 $.sub = `签到失败❌`,
                 $.desc = `说明: ` + get_sign.msg,
@@ -135,7 +135,7 @@ function userInfo() {
                     chargemoney = data.match(/charge_money":"(\d+\.\d+)/)[1],
                     waitingcoin = data.match(/waiting_coin":(\d+)/)[1],
                     availablecoin = data.match(/available_coin":(\d+)/)[1],
-                    invitecode = data.match(/invite_code":"(\w+)/)[1],
+                    //invitecode = data.match(/invite_code":"(\w+)/)[1],
                     coinenabled = data.match(/coin_enabled":(\d+)/)[1]
                     rate = data.match(/exchange_rate":(\d+)/)[1]
                     isblack = data.match(/is_black":(\w+)/)[1]
@@ -143,21 +143,6 @@ function userInfo() {
                     coinnum = parseInt(coinenabled/100)*100
                    await coinexChange()
                   }
-                }
-                 $.sub = " 昵称:"+username+" 现金:"+ chargemoney+"元 金币:"+availablecoin;
-                 $.log("\n********** 昵称:"+username+ " 现金:"+chargemoney+"元 **********\n");
-             $.setdata(username,"baidu_nick")
-                if (Number(chargemoney) >= Number(withcash) && $.time("HH") == "06") {
-                   await withDraw(withcash)
-                if ($.isNode()) {
-                  await notify.sendNotify($.name+" 成功提现"+withcash+"元\n"+$.sub)
-                 }
-                   $.done()
-                }
-            } catch(error) {
-                $.msg($.name, "获取用户信息失败"),
-                $.log("用户信息详情页错误\n" + error)
-            }
             resolve()
         })
       },1000)
